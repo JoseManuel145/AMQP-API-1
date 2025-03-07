@@ -20,9 +20,9 @@ func NewMySQL() *MySQL {
 }
 
 // Create inserta un reporte en la base de datos.
-func (mysql *MySQL) Create(title, content string) error {
-	query := "INSERT INTO reports (title, content) VALUES (?, ?)"
-	result, err := mysql.conn.ExecutePreparedQuery(query, title, content)
+func (mysql *MySQL) Create(id int, title, content string) error {
+	query := "INSERT INTO reports (id, title, content) VALUES (?, ?, ?)"
+	result, err := mysql.conn.ExecutePreparedQuery(query, id, title, content)
 	if err != nil {
 		return fmt.Errorf("error al ejecutar la consulta: %w", err)
 	}
@@ -35,7 +35,7 @@ func (mysql *MySQL) Create(title, content string) error {
 
 // FindAll obtiene todos los reportes de la base de datos.
 func (mysql *MySQL) ViewAll() ([]entities.Report, error) {
-	query := "SELECT id, title, content FROM reports"
+	query := "SELECT id, title, content, status FROM reports"
 	rows := mysql.conn.FetchRows(query)
 	if rows == nil {
 		return nil, fmt.Errorf("error al recuperar los registros")
@@ -45,7 +45,7 @@ func (mysql *MySQL) ViewAll() ([]entities.Report, error) {
 	var reports []entities.Report
 	for rows.Next() {
 		var report entities.Report
-		if err := rows.Scan(&report.ID, &report.Title, &report.Content); err != nil {
+		if err := rows.Scan(&report.ID, &report.Title, &report.Content, &report.Status); err != nil {
 			return nil, fmt.Errorf("error al escanear la fila: %w", err)
 		}
 		reports = append(reports, report)

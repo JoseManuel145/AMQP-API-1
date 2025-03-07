@@ -16,7 +16,7 @@ func NewCreateReportUseCase(r domain.IReport) *CreateReportUseCase {
 
 func (uc *CreateReportUseCase) Execute(id int, title, content string) error {
 	// Llama al repositorio para crear el reporte.
-	err := uc.repo.Create(title, content)
+	err := uc.repo.Create(id, title, content)
 	if err != nil {
 		return err
 	}

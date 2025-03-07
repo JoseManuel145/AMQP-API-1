@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"report/src/report/application/usecases"
 	"report/src/report/domain/entities"
@@ -62,4 +63,7 @@ func (cr *CreateReportController) Run(c *gin.Context) {
 
 	// Retornar el reporte creado
 	c.JSON(http.StatusCreated, gin.H{"message": "Report saved and message sent successfully"})
+
+	// Imprimir el dato al final
+	fmt.Println("Message Data:", messageData)
 }

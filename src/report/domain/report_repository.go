@@ -5,7 +5,7 @@ import (
 )
 
 type IReport interface {
-	Create(title, content string) error
+	Create(id int, title, content string) error
 	ViewOne(id int) (*entities.Report, error)
 	ViewAll() ([]entities.Report, error)
 }
