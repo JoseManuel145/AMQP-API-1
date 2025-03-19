@@ -3,7 +3,7 @@ package infraestructure
 import (
 	"log"
 	"os"
-	"report/src/report/application/usecases"
+	"report/src/report/application"
 	"report/src/report/infraestructure/adapters"
 	"report/src/report/infraestructure/controllers"
 
@@ -29,15 +29,17 @@ func InitReports(db *MySQL, router *gin.Engine) {
 	}
 
 	// Instanciar casos de uso pasando también el adaptador de RabbitMQ
-	createReport := usecases.NewCreateReportUseCase(db)
-	viewReports := usecases.NewViewReports(db)
-	viewOneReport := usecases.NewViewOneReportUseCase(db)
+	createReport := application.NewCreateReportUseCase(db)
+	viewReports := application.NewViewReports(db)
+	viewOneReport := application.NewViewOneReportUseCase(db)
+	sendMessage := application.NewSendMessageUseCase(rabbitAdapter)
 
 	// Instanciar controladores
-	createReportController := controllers.NewCreateReportController(createReport, rabbitAdapter)
+	sendMessageController := controllers.NewSendMessageController(sendMessage)
+	createReportController := controllers.NewCreateReportController(createReport)
 	viewReportsController := controllers.NewViewReportsController(viewReports)
 	viewOneReportController := controllers.NewViewOneReportController(viewOneReport)
 
 	// Configurar rutas
-	SetupReportRoutes(router, createReportController, viewReportsController, viewOneReportController)
+	SetupReportRoutes(router, sendMessageController, createReportController, viewReportsController, viewOneReportController)
 }

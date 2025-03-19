@@ -3,16 +3,16 @@ package controllers
 import (
 	"fmt"
 	"net/http"
-	"report/src/report/application/usecases"
+	"report/src/report/application"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ViewReportsController struct {
-	UseCase *usecases.ViewReportsUseCase
+	UseCase *application.ViewReportsUseCase
 }
 
-func NewViewReportsController(useCase *usecases.ViewReportsUseCase) *ViewReportsController {
+func NewViewReportsController(useCase *application.ViewReportsUseCase) *ViewReportsController {
 	return &ViewReportsController{UseCase: useCase}
 }
 
@@ -28,7 +28,7 @@ func (c *ViewReportsController) Run(ctx *gin.Context) {
 	}
 	// Depuración
 	for _, report := range reports {
-		fmt.Printf("Report: %#v\n", report) // Imprime los datos para depurar
+		fmt.Printf("Report: %#v\n", report)
 	}
 	ctx.JSON(http.StatusOK, reports)
 }

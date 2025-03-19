@@ -1,8 +1,6 @@
 package core
 
 import (
-	"log"
-
 	"github.com/streadway/amqp"
 )
 
@@ -11,6 +9,7 @@ type RabbitMQClient struct {
 	Channel *amqp.Channel
 }
 
+// Ejemplo de como se implementaria la conexion a RabbitMQ con multiples entidades
 func NewRabbitMQClient(amqpURL string) (*RabbitMQClient, error) {
 	conn, err := amqp.Dial(amqpURL)
 	if err != nil {
@@ -26,36 +25,6 @@ func NewRabbitMQClient(amqpURL string) (*RabbitMQClient, error) {
 		Conn:    conn,
 		Channel: ch,
 	}, nil
-}
-
-func (r *RabbitMQClient) Publish(queueName, body string) error {
-	_, err := r.Channel.QueueDeclare(
-		queueName,
-		true,  // durable
-		false, // autoDelete
-		false, // exclusive
-		false, // noWait
-		nil,   // args
-	)
-	if err != nil {
-		return err
-	}
-
-	err = r.Channel.Publish(
-		"",        // exchange
-		queueName, // routing key
-		false,     // mandatory
-		false,     // immediate
-		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        []byte(body),
-		})
-	if err != nil {
-		return err
-	}
-
-	log.Printf("Mensaje publicado en la cola %s: %s", queueName, body)
-	return nil
 }
 
 func (r *RabbitMQClient) Close() {

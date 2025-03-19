@@ -19,7 +19,6 @@ func NewMySQL() *MySQL {
 	return &MySQL{conn: conn}
 }
 
-// Create inserta un reporte en la base de datos.
 func (mysql *MySQL) Create(id int, title, content string) error {
 	query := "INSERT INTO reports (id, title, content) VALUES (?, ?, ?)"
 	result, err := mysql.conn.ExecutePreparedQuery(query, id, title, content)

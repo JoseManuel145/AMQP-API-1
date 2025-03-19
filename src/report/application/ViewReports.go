@@ -1,15 +1,15 @@
-package usecases
+package application
 
 import (
-	"report/src/report/domain"
 	"report/src/report/domain/entities"
+	"report/src/report/domain/repositories"
 )
 
 type ViewReportsUseCase struct {
-	db domain.IReport
+	db repositories.IReport
 }
 
-func NewViewReports(db domain.IReport) *ViewReportsUseCase {
+func NewViewReports(db repositories.IReport) *ViewReportsUseCase {
 	return &ViewReportsUseCase{db: db}
 }
 

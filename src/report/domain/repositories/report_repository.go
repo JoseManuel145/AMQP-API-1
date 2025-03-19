@@ -1,4 +1,4 @@
-package domain
+package repositories
 
 import (
 	"report/src/report/domain/entities"

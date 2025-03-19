@@ -2,18 +2,17 @@ package controllers
 
 import (
 	"net/http"
+	"report/src/report/application"
 	"strconv"
-
-	"report/src/report/application/usecases"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ViewOneReportController struct {
-	useCase *usecases.ViewOneReportUseCase
+	useCase *application.ViewOneReportUseCase
 }
 
-func NewViewOneReportController(uc *usecases.ViewOneReportUseCase) *ViewOneReportController {
+func NewViewOneReportController(uc *application.ViewOneReportUseCase) *ViewOneReportController {
 	return &ViewOneReportController{useCase: uc}
 }
 

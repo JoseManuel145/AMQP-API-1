@@ -1,15 +1,15 @@
-package usecases
+package application
 
 import (
-	"report/src/report/domain"
 	"report/src/report/domain/entities"
+	"report/src/report/domain/repositories"
 )
 
 type ViewOneReportUseCase struct {
-	repo domain.IReport
+	repo repositories.IReport
 }
 
-func NewViewOneReportUseCase(r domain.IReport) *ViewOneReportUseCase {
+func NewViewOneReportUseCase(r repositories.IReport) *ViewOneReportUseCase {
 	return &ViewOneReportUseCase{repo: r}
 }
 

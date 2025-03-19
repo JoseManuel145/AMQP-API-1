@@ -18,8 +18,6 @@ func NewRabbitAdapter(amqpURL, queueName string) (*RabbitAdapter, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	// Declarar la cola
 	_, err = ch.QueueDeclare(
 		queueName, // nombre de la cola
 		true,      // durable
@@ -55,12 +53,9 @@ func (r *RabbitAdapter) SendMessage(mensaje string) error {
 	if err != nil {
 		return err
 	}
-
 	log.Printf("Mensaje enviado a la cola %s: %s", r.QueueName, mensaje)
 	return nil
 }
-
-// Close cierra el canal y la conexión.
 func (r *RabbitAdapter) Close() {
 	if r.Channel != nil {
 		r.Channel.Close()

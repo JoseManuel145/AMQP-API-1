@@ -8,13 +8,14 @@ import (
 
 func SetupReportRoutes(
 	router *gin.Engine,
+	sendMessageController *controllers.SendMessageController,
 	createReportController *controllers.CreateReportController,
 	viewReportsController *controllers.ViewReportsController,
 	viewOneReportController *controllers.ViewOneReportController,
 ) {
 	reportGroup := router.Group("/reports")
 	{
-		reportGroup.POST("", createReportController.Run)
+		reportGroup.POST("", createReportController.Run, sendMessageController.Run)
 		reportGroup.GET("", viewReportsController.Run)
 		reportGroup.GET("/{id}", viewOneReportController.Run)
 	}
