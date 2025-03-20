@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"report/src/report/application"
 	"report/src/report/domain/entities"
@@ -29,7 +28,9 @@ func (cr *CreateReportController) Run(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create report: " + err.Error()})
 		return
 	}
-	c.JSON(http.StatusCreated, gin.H{"message": "Report saved successfully"})
 
-	fmt.Println("Report Data:", report)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Report created successfully",
+		"report":  report,
+	})
 }

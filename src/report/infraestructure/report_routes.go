@@ -15,7 +15,8 @@ func SetupReportRoutes(
 ) {
 	reportGroup := router.Group("/reports")
 	{
-		reportGroup.POST("", createReportController.Run, sendMessageController.Run)
+		reportGroup.POST("", createReportController.Run)
+		reportGroup.POST("/msg", sendMessageController.Run)
 		reportGroup.GET("", viewReportsController.Run)
 		reportGroup.GET("/{id}", viewOneReportController.Run)
 	}

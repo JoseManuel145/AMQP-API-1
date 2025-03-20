@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"report/src/report/infraestructure"
 	"time"
 
@@ -22,13 +21,11 @@ func main() {
 	}
 
 	router := gin.Default()
-
 	router.Use(cors.New(config))
 
 	db := infraestructure.NewMySQL()
-
 	infraestructure.InitReports(db, router)
 
 	log.Println("Server is running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	router.Run(":8080")
 }
